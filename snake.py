@@ -2,12 +2,12 @@ import urandom
 class Snake(object):
     def __init__(self,x=32,y=32,s=22):
         urandom.seed(s) #seed
+        self.x=x
+        self.y=y
         self.snake=[]
         self.apple=[]
         self.randapple()
         self.init_snake()
-        self.x=x
-        self.y=y
     def randapple(self):
         m=self.rand()
         if m in self.snake:
@@ -20,10 +20,10 @@ class Snake(object):
             self.snake=[]
             self.init_snake()
     def rand(self):
-        x=urandom.randint(0,31)
-        y=urandom.randint(0,31)
+        x=urandom.randint(0,self.x-1)
+        y=urandom.randint(0,self.y-1)
         return [x,y]
-    def do(self,types=1):
+    def do(self,types=1,q=1):
         # m x n y
         # 上 y-1 0
         # 下 y+1 1
@@ -60,7 +60,7 @@ class Snake(object):
         head=self.snake[0]
         if head in self.snake[1:]:
             return False
-        if head[0]<0 or head[0]>=self.x or head[1]<0 or head[1]>self.y:
+        if head[0]<0 or head[0]>=self.x or head[1]<0 or head[1]>=self.y:
             return False
         return True
     def jugga(self,snakes):
